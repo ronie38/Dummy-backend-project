@@ -1,0 +1,518 @@
+// const express = require('express');
+// const app = express();
+
+
+// //middle ware is being used 
+// app.use(express.json())
+
+
+
+// const claims=[
+    
+//     {    id:1,name:'lic'},
+//     {    id:2,name:'jeevan'},
+//     {    id:3,name:'home'}
+    
+// ];
+
+
+
+
+
+// app.get('/', (req, res) =>{
+//     res.send("Lumiq");
+// });
+
+
+
+
+// app.get('/api/claims', (req, res) =>{
+//     res.send(claims);
+// });
+
+
+// app.get('/api/claims/:id',(req,res)=>{
+//     const claim=claims.find(i=>i.id===parseInt(req.params.id));
+//     if(!claim) res.status(404).send('the claim you search was not found ');
+//     res.send(claim);
+// });
+
+
+
+
+
+
+// app.post('/api/claims',(req,res)=>{
+//  const claim={
+//     id:claims.length+1, 
+//     name:req.body.name
+
+//  };
+//  claims.push(claim);
+//  res.send(claim)
+// });
+
+
+// //update the claims
+// app.put('/api/claims/:id',(req,res)=>{
+//     //look up the course 
+//     const claim=claims.find(c=>c.id===parseInt(req.params.id));
+//     if(!claim) return res.status(404).send('claim not found')
+//     //if not exists return 404
+//     //validate the req
+    
+//     //update the course
+//     claim.name=req.body.name;
+//     res.send(claim)
+//     //return the updated course 
+// })
+
+
+
+
+// //delete
+// app.delete('/api/claims/:id',(req,res)=>{
+//     //first search the claim
+//     const claim=claims.find(c=>c.id===parseInt(req.params.id));
+//     if(!claim) return res.status(404).send('claim not found');
+//     //if found delete
+//     const index=claims.indexOf(claim);
+//     claims.splice(index,1);
+//     res.send(claim)
+
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // const port = 3000;
+// // app.listen(port, () => {
+// //     console.log(Server is running on ${port});
+// // })
+
+
+// // app.js
+
+
+
+
+
+
+// const express = require('express');
+// const bodyParser = require('body-parser');
+
+// const app = express();
+// app.use(bodyParser.json());
+
+// // In-memory data structures (replace with database integration in a real application)
+// let policies = [
+//     {
+//         "id":1,
+//         'policyholderId':1,
+//         'amount':20000,
+//         'type':"health"
+    
+//     }
+// ];
+// let policyholders = [];
+// let claims = [];
+
+// // Define Basic Entities
+
+// // Policy Entity
+// class Policy {
+//     constructor(id, policyholderId, amount, type) {
+//         this.id = id;
+//         this.policyholderId = policyholderId;
+//         this.amount = amount;
+//         this.type = type;
+//     }
+// }
+
+// // Policyholder Entity
+// class Policyholder {
+//     constructor(id, name, age) {
+//         this.id = id;
+//         this.name = name;
+//         this.age = age;
+//     }
+// }
+
+// // Claim Entity
+// class Claim {
+//     constructor(id, policyId, amount, description) {
+//         this.id = id;
+//         this.policyId = policyId;
+//         this.amount = amount;
+//         this.description = description;
+//     }
+// }
+
+// // CRUD Functions
+
+// // Create Policy
+// app.post('/policy', (req, res) => {
+//     const { policyholderId, amount, type } = req.body;
+//     const id = policies.length + 1;
+//     const policy = new Policy(id, policyholderId, amount, type);
+//     policies.push(policy);
+//     res.json(policy);
+// });
+
+// // Read Policies
+// app.get('/policies', (req, res) => {
+//     res.json(policies);
+// });
+
+// // Update Policy
+// app.put('/policy/:id', (req, res) => {
+//     const id = parseInt(req.params.id);
+//     const { amount } = req.body;
+//     const policy = policies.find(policy => policy.id === id);
+//     if (policy) {
+//         policy.amount = amount;
+//         res.json(policy);
+//     } else {
+//         res.status(404).json({ message: "Policy not found" });
+//     }
+// });
+
+// // Delete Policy
+// app.delete('/policy/:id', (req, res) => {
+//     const id = parseInt(req.params.id);
+//     policies = policies.filter(policy => policy.id !== id);
+//     res.sendStatus(204);
+// });
+
+// // Create Policyholder
+// app.post('/policyholder', (req, res) => {
+//     const { name, age } = req.body;
+//     const id = policyholders.length + 1;
+//     const policyholder = new Policyholder(id, name, age);
+//     policyholders.push(policyholder);
+//     res.json(policyholder);
+// });
+
+// // Read Policyholders
+// app.get('/policyholders', (req, res) => {
+//     res.json(policyholders);
+// });
+
+// // Update Policyholder
+// app.put('/policyholder/:id', (req, res) => {
+//     const id = parseInt(req.params.id);
+//     const { name, age } = req.body;
+//     const policyholderIndex = policyholders.findIndex(policyholder => policyholder.id === id);
+//     if (policyholderIndex !== -1) {
+//         policyholders[policyholderIndex] = { id, name, age };
+//         res.json(policyholders[policyholderIndex]);
+//     } else {
+//         res.status(404).json({ message: "Policyholder not found" });
+//     }
+// });
+
+// // Delete Policyholder
+// app.delete('/policyholder/:id', (req, res) => {
+//     const id = parseInt(req.params.id);
+//     policyholders = policyholders.filter(policyholder => policyholder.id !== id);
+//     res.sendStatus(204);
+// });
+
+// // Create Claim
+// app.post('/claim', (req, res) => {
+//     const { policyId, amount, description } = req.body;
+//     const id = claims.length + 1;
+//     const claim = new Claim(id, policyId, amount, description);
+//     claims.push(claim);
+//     res.json(claim);
+// });
+
+// // Read Claims
+// app.get('/claims', (req, res) => {
+//     res.json(claims);
+// });
+
+// // Update Claim
+// app.put('/claim/:id', (req, res) => {
+//     const id = parseInt(req.params.id);
+//     const { policyId, amount, description } = req.body;
+//     const claimIndex = claims.findIndex(claim => claim.id === id);
+//     if (claimIndex !== -1) {
+//         claims[claimIndex] = { id, policyId, amount, description };
+//         res.json(claims[claimIndex]);
+//     } else {
+//         res.status(404).json({ message: "Claim not found" });
+//     }
+// });
+
+// // Delete Claim
+// app.delete('/claim/:id', (req, res) => {
+//     const id = parseInt(req.params.id);
+//     claims = claims.filter(claim => claim.id !== id);
+//     res.sendStatus(204);
+// });
+
+// // Start the server
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+//     console.log(Server is running on port ${PORT});
+// });
+
+///222222
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+app.use(bodyParser.json());
+
+// In-memory data structures (replace with database integration in a real application)
+let policies = [
+{
+        "id":1,
+        'policyholderId':1,
+        'amount':20000,
+        'type':"health"
+            
+},
+{
+    "id":2,
+    'policyholderId':2,
+    'amount':30000,
+    'type':"health"
+        
+}
+];
+let policyholders = [];
+let claims = [];
+
+// Define Basic Entities
+
+// Policy Entity
+class Policy {
+    constructor(id, policyholderId, amount, type) {
+        this.id = id;
+        this.policyholderId = policyholderId;
+        this.amount = amount;
+        this.type = type;
+    }
+}
+
+// Policyholder Entity
+class Policyholder {
+    constructor(id, name, age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+}
+
+// Claim Entity
+class Claim {
+    constructor(id, policyId, amount, description) {
+        this.id = id;
+        this.policyId = policyId;
+        this.amount = amount;
+        this.description = description;
+    }
+}
+
+// Validators
+
+// Validate Policy
+const validatePolicy = (policy) => {
+    if (!policy.policyholderId || !policy.amount || !policy.type) {
+        throw new Error("Policyholder ID, amount, and type are required.");
+    }
+    if (!Number.isFinite(policy.amount) || policy.amount <= 0) {
+        throw new Error("Amount must be a positive number.");
+    }
+};
+
+// Validate Policyholder
+const validatePolicyholder = (policyholder) => {
+    if (!policyholder.name || !policyholder.age) {
+        throw new Error("Name and age are required for a policyholder.");
+    }
+    // Check name format (only alphabets and spaces allowed)
+    if (!/^[a-zA-Z\s]+$/.test(policyholder.name)) {
+        throw new Error("Name should only contain alphabets and spaces.");
+    }
+    // Check age format (only positive integers allowed)
+    if (!Number.isInteger(policyholder.age) || policyholder.age <= 0) {
+        throw new Error("Age must be a positive integer.");
+    }
+};
+//changes by me 
+// Validate Claim
+const validateClaim = (claim) => {
+    const policy = policies.find(policy => policy.id === claim.policyId);
+
+    if (!claim.policyId || !claim.amount || !claim.description) {
+        throw new Error("Policy ID, amount, and description are required for a claim.");
+    }
+    if (!Number.isFinite(claim.amount) || claim.amount <= 0) {
+        throw new Error("Amount must be a positive number.");
+    }
+    if (policy.amount<claim.amount){
+        throw new Error("claim amount is greater them sum assured  ")
+    }
+};
+
+// CRUD Functions
+
+// Create Policy
+app.post('/policy', (req, res) => {
+    try {
+        validatePolicy(req.body);
+        const { policyholderId, amount, type } = req.body;
+        const id = policies.length + 1;
+        const policy = new Policy(id, policyholderId, amount, type);
+        policies.push(policy);
+        res.json(policy);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Read Policies
+app.get('/policies', (req, res) => {
+    res.json(policies);
+});
+
+// Update Policy
+app.put('/policy/:id', (req, res) => {
+    try {
+        validatePolicy(req.body);
+        const id = parseInt(req.params.id);
+        const { amount } = req.body;
+        const policy = policies.find(policy => policy.id === id);
+        if (policy) {
+            policy.amount = amount;
+            res.json(policy);
+        } else {
+            res.status(404).json({ message: "Policy not found" });
+        }
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Delete Policy
+app.delete('/policy/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    policies = policies.filter(policy => policy.id !== id);
+    res.sendStatus(204);
+});
+
+// Create Policyholder
+app.post('/policyholder', (req, res) => {
+    try {
+        validatePolicyholder(req.body);
+        const { name, age } = req.body;
+        const id = policyholders.length + 1;
+        const policyholder = new Policyholder(id, name, age);
+        policyholders.push(policyholder);
+        res.json(policyholder);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Read Policyholders
+app.get('/policyholders', (req, res) => {
+    res.json(policyholders);
+});
+
+// Update Policyholder
+app.put('/policyholder/:id', (req, res) => {
+    try {
+        validatePolicyholder(req.body);
+        const id = parseInt(req.params.id);
+        const { name, age } = req.body;
+        const policyholderIndex = policyholders.findIndex(policyholder => policyholder.id === id);
+        if (policyholderIndex !== -1) {
+            policyholders[policyholderIndex] = { id, name, age };
+            res.json(policyholders[policyholderIndex]);
+        } else {
+            res.status(404).json({ message: "Policyholder not found" });
+        }
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Delete Policyholder
+app.delete('/policyholder/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    policyholders = policyholders.filter(policyholder => policyholder.id !== id);
+    res.sendStatus(204);
+});
+
+// Create Claim
+app.post('/claim', (req, res) => {
+    try {
+        validateClaim(req.body);
+        const { policyId, amount, description } = req.body;
+        const id = claims.length + 1;
+        const claim = new Claim(id, policyId, amount, description);
+        claims.push(claim);
+        res.json(claim);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Read Claims
+app.get('/claims', (req, res) => {
+    res.json(claims);
+});
+
+// Update Claim
+app.put('/claim/:id', (req, res) => {
+    try {
+        validateClaim(req.body);
+        const id = parseInt(req.params.id);
+        const { policyId, amount, description } = req.body;
+        const claimIndex = claims.findIndex(claim => claim.id === id);
+        if (claimIndex !== -1) {
+            claims[claimIndex] = { id, policyId, amount, description };
+            res.json(claims[claimIndex]);
+        } else {
+            res.status(404).json({ message: "Claim not found" });
+        }
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Delete Claim
+app.delete('/claim/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    claims = claims.filter(claim => claim.id !== id);
+    res.sendStatus(204);
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(Server is running on port ${PORT});
+});
